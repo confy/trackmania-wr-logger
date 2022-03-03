@@ -1,0 +1,27 @@
+{
+  "name": "trackmania-wr-logger",
+  "version": "1.0.0",
+  "description": "Tool for auto downloading of new trackmania replays on a selected set of map ids",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/confy/trackmania-wr-logger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/confy/trackmania-wr-logger/issues"
+  },
+  "homepage": "https://github.com/confy/trackmania-wr-logger#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.3",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "node-cron": "^3.0.0"
+  }
+}
