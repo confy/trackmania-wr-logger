@@ -2,9 +2,11 @@
   "name": "trackmania-wr-logger",
   "version": "1.0.0",
   "description": "Tool for auto downloading of new trackmania replays on a selected set of map ids",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy-commands": "node src/deploy-commands.js",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +21,9 @@
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
+    "cron": "^1.8.2",
     "discord-api-types": "^0.27.3",
     "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0",
-    "node-cron": "^3.0.0"
+    "dotenv": "^16.0.0"
   }
 }
