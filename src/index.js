@@ -4,6 +4,10 @@ const cron = require('cron');
 const discord = require('discord.js');
 require('dotenv').config()
 
+const db = require('./models/db')
+const tm = require('./models/tm')
+const user = require('./models/user')
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
@@ -15,17 +19,10 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
+    client.user.setActivity("🇨🇦", { type: "WATCHING"})
     console.log('Ready!');
 });
 
-const test = new cron.CronJob("0 */1 * * * *", () =>{
-    console.log("Test");
-    client.channels.fetch("858470809143607307")
-    let testmsg = client.channels.cache.get("858470809143607307")
-    testmsg.send("test")
-});
-
-test.start()
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
@@ -43,4 +40,17 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+// Check for new WRs every 10 minutes (1 for tests)
+const test = new cron.CronJob("0 */1 * * * *", () =>{
+    console.log("Checking WRs");    
+    client.channels.fetch('858470809143607307')
+    .then(channel => channel.send("Checking WRs..."));
+    
+    tm.getMap('JPZz7UXg5Y2K0VpsyUNgCMP0yH8')
+    
+});
+
+test.start()
+
 

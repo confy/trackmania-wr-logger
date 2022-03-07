@@ -1,0 +1,5 @@
+i need a user file that checks for authentication of a discord user. They should have hte manage server permission. (config?)
+i need a db file with models to add and remove maps by uid. 
+
+i need a cron job on a n scale that iterates over map uids, and checks if the current WR matches the one from n time ago.
+    if it does, 
