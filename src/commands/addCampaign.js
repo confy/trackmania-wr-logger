@@ -5,6 +5,7 @@ module.exports = {
 		.setName('add-campaign')
 		.setDescription('Adds a campaign to the watchlist'),
 	async execute(interaction) {
+		console.log(interaction)
 		return interaction.reply('Pong!');
 	},
 };

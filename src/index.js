@@ -42,15 +42,15 @@ client.on('interactionCreate', async interaction => {
 client.login(process.env.DISCORD_TOKEN);
 
 // Check for new WRs every 10 minutes (1 for tests)
-const test = new cron.CronJob("0 */1 * * * *", () =>{
-    console.log("Checking WRs");    
-    client.channels.fetch('858470809143607307')
-    .then(channel => channel.send("Checking WRs..."));
+// const test = new cron.CronJob("0 */1 * * * *", () =>{
+//     console.log("Checking WRs");    
+//     client.channels.fetch('858470809143607307')
+//     .then(channel => channel.send("Checking WRs..."));
     
-    tm.getMap('JPZz7UXg5Y2K0VpsyUNgCMP0yH8')
+//     tm.addMap('JPZz7UXg5Y2K0VpsyUNgCMP0yH8')
     
-});
+// });
 
-test.start()
+// test.start()
 
 

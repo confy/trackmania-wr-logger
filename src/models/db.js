@@ -9,7 +9,7 @@ var db = new loki('database.db', {
 });
 
 function databaseInitialize() {
-    const collections = ["maps"]
+    const collections = ["maps"];
     collections.forEach(function (collectionName) {
         if (!db.getCollection(collectionName)) {
             db.addCollection(collectionName);
@@ -17,11 +17,4 @@ function databaseInitialize() {
     });
 }
 
-
-
-function addMap(uid) {
-    var maps = db.getCollection("maps");
-    
-    maps.find({name: uid})
-}
 module.exports = db;
