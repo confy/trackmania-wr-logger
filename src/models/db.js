@@ -9,7 +9,7 @@ var db = new loki('database.db', {
 });
 
 function databaseInitialize() {
-    const collections = ["maps"];
+    const collections = ["maps", "guilds"];
     collections.forEach(function (collectionName) {
         if (!db.getCollection(collectionName)) {
             db.addCollection(collectionName);

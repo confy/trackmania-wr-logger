@@ -38,6 +38,8 @@ function convertToText(obj) {
 
     return string.join("")
 }
+
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('add-map')

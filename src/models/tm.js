@@ -4,25 +4,26 @@ const TMIO = require('trackmania.io'),
 
 
 tm.setUserAgent("confuzed#3037 WR Tracker");
+
 async function getRecord(map, pos) {
     ret = {}
 
     try {
         // try to get leaderboard entry and return necessary data
         record = await map.leaderboardGet(pos)
-        console.log(record)
         player = await record.player()
         ret.date = record.date;
         ret.time = record.time;
         ret.ghost = record.ghost;
         ret.name = player.name
+        console.log(ret)
 
     }
     catch (err) {
         // If record does not exist, return an empty record
         console.log(err)
         ret.date = "";
-        ret.time = ""
+        ret.time = 0
         ret.name = ""
         ret.ghost = ""
     }
@@ -40,11 +41,13 @@ async function getMapData(uid) {
             guilds: [],
             name: tm.formatTMText(map.name),
             thumbnail: map.thumbnail,
-            records: {
-                1: {},
-                2: {}
+            notifiedDiscord: false,
+            record: {
+                date: "",
+                name: "", 
+                ghost: "", 
+                time: 0
             },
-
         }
         return ret
     }
@@ -55,11 +58,9 @@ async function getMapData(uid) {
 }
 
 async function addMapToWatchlist(guildId, uid) {
-
     var maps = db.getCollection("maps");
     let mapInDb = maps.find({ uid: uid })
     console.log(mapInDb)
-
     if (mapInDb.length > 0) {
         // If map in DB, someone is watching, maybe not this guild
         if (mapInDb[0].guilds.includes(guildId)) {
@@ -78,12 +79,9 @@ async function addMapToWatchlist(guildId, uid) {
     }
     // Otherwise this is a new map and we should get data :
     let map = await getMapData(uid)
-
     // if guilds does not exist there was an error, return
-    if (!map.guilds) {
-        return ret
-    }
-    
+    if (!map.guilds) { return map }
+
     // added new map successfully, add guildId to map and update DB
     map.guilds.push(guildId)
     maps.insert(map)
@@ -92,11 +90,29 @@ async function addMapToWatchlist(guildId, uid) {
 
 }
 
+async function checkRecord(uid) {
+    let maps = db.getCollection("maps");
+    let map = maps.find({ uid: uid })
+    if (map.length > 0) {
+        map = map[0]
+        mapObj = await tm.maps.get(uid)
+        let newRecord = await getRecord(mapObj, 1)
+        if (newRecord.time != map.record.time) {
+            map.record = newRecord
+            map.notifiedDiscord = false
+            maps.update(map)
+        }
+        return map
+    } else {
+        console.log("No map with uid: " + uid)
+    }
+}
+
 function removeMap(uid) {
     var maps = db.getCollection("maps");
     maps.remove(uid);
 }
 
 module.exports = {
-    addMapToWatchlist,
+    addMapToWatchlist, checkRecord
 }
